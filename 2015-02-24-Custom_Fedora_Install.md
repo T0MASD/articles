@@ -6,8 +6,7 @@ I proceed to create partition layout on the hard drive /dev/sda using fdisk. Iâ€
 
 # Prepare storage
 
-```sh
-[liveuser@localhost ~]$ sudo fdisk /dev/sda
+```[liveuser@localhost ~]$ sudo fdisk /dev/sda
 [sudo] password for liveuser:
 
 Welcome to fdisk (util-linux 2.25.2).
@@ -54,13 +53,13 @@ Created a new partition 2 of type 'Linux' and of size 7.5 GiB.
 Command (m for help): write
 The partition table has been altered.
 Calling ioctl() to re-read partition table.
-Syncing disks.```
+Syncing disks.
+```
 
 
 Partition layout is created, next step is creating file systems. I format /dev/sda1 partition in ext4, it will be used as /boot
 
-```sh
-[liveuser@localhost ~]$ sudo mkfs.ext4 /dev/sda1
+```[liveuser@localhost ~]$ sudo mkfs.ext4 /dev/sda1
 mke2fs 1.42.11 (09-Jul-2014)
 Creating filesystem with 1968896 4k blocks and 492880 inodes
 Filesystem UUID: 8277a9aa-1c16-4872-984e-f4192b3e56ac
@@ -70,42 +69,42 @@ Superblock backups stored on blocks:
 Allocating group tables: done
 Writing inode tables: done
 Creating journal (32768 blocks): done
-Writing superblocks and filesystem accounting information: done```
+Writing superblocks and filesystem accounting information: done
+```
 
 
 Fedora comes with lvm support by default, I let lvm use /dev/sda2. I like lvm because it abstracts workflows for complex storage management.
 
 * create physical volume
-```sh
-[root@localhost liveuser]# pvcreate /dev/sda2
-  Physical volume "/dev/sda2" successfully created```
+```[root@localhost liveuser]# pvcreate /dev/sda2
+  Physical volume "/dev/sda2" successfully created
+```
 
 * create volume group named vg
-```sh
-[root@localhost liveuser]# vgcreate vg /dev/sda2
-  Volume group "vg" successfully created```
+```[root@localhost liveuser]# vgcreate vg /dev/sda2
+  Volume group "vg" successfully created
+```
 
 * Create 5gb logical volume in VG named fedora used as root of the filystem
-```sh
-[root@localhost liveuser]# lvcreate -n fedora -L5G vg
-  Logical volume "fedora" created```
+```[root@localhost liveuser]# lvcreate -n fedora -L5G vg
+  Logical volume "fedora" created
+```
 
 * Create 500mb logical volume in VG named swap used as swap
-```sh
-[root@localhost liveuser]# lvcreate -n swap -L500M vg
-  Logical volume "swap" created```
+```[root@localhost liveuser]# lvcreate -n swap -L500M vg
+  Logical volume "swap" created
+```
 
 Use lvs command to see resulting lvm layout
-```sh
-[root@localhost liveuser]# lvs -a
+```[root@localhost liveuser]# lvs -a
   LV     VG   Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
   fedora vg   -wi-a-----   5.00g
-  swap   vg   -wi-ao---- 500.00m```
+  swap   vg   -wi-ao---- 500.00m
+```
 
 #Kickstart file
 
-```sh
-#version=DEVEL
+```#version=DEVEL
 # Install OS instead of upgrade
 install
 # Enable updates repo
@@ -164,13 +163,13 @@ curl -k https://dl.dropboxusercontent.com/u/32633398/post.py | python -
 # disable system setup on firstboot
 firstboot --disable
 # Halt after installation
-halt```
+halt
+```
 
 # Installation process
 Anaconda is fedora installer, by default it runs in graphical interface, but itâ€™s possible to run it in text mode and specify kickstart (answer) file to be used for automated installation.
 
-```sh
-[root@localhost liveuser]# anaconda -T --kickstart=fedora.ks
+```[root@localhost liveuser]# anaconda -T --kickstart=fedora.ks
 Starting installer, one moment...
 anaconda 21.48.21-1 for anaconda bluesky (pre-release) started.
  * installation log files are stored in /tmp during the installation
@@ -204,7 +203,8 @@ Creating xfs on /dev/mapper/vg-fedora
 .
 Creating ext4 on /dev/sda1
 .
-Starting package installation process```
+Starting package installation process
+```
 
 # End
 
