@@ -1,7 +1,7 @@
 Title:   Custom fedora install
 Summary: Fedora Linux install using kickstart
 Authors: Tomas Dabašinskas
-Date:    February 24, 2014
+Date:    February 24, 2015
 
 #Custom fedora install
 In this post I’ll cover custom fedora linux installation using livecd and kickstart file. I think fedora is one of the best linux distributions around. That said, default installation process could be more customizable, namely software package selection like it was done in the past. Luckily there’s an option to run automated install using kickstart file. 
